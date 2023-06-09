@@ -10,6 +10,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/v1/users")
@@ -41,9 +44,6 @@ public class UserController {
   @RequestMapping(path = "/loginpage", method = RequestMethod.POST)
   public String registration(@ModelAttribute User user, ModelMap modelMap , @RequestParam("email") String email) {
     System.out.println("Processing On Register Page....");
-
-
-
     userService.insertUser(user);
     System.out.println(user);
     String message = "Form submitted successfully.";
@@ -56,14 +56,35 @@ public class UserController {
   public String login(@RequestParam("email") String email , @RequestParam("password") String password, ModelMap modelMap, @ModelAttribute User user) {
     System.out.println("Login Procsessing....");
     User user1 = userService.userDetails(email);
+    String existPassword = user1.getPassword();
+    System.out.println("Exist Password : " + existPassword);
+    boolean passchecker  = passwordEncoder.matches(password , existPassword);
+    System.out.println("At Login Time Password : " + passchecker);
 
     if (user1 == null){
       System.out.println("Login Failed....");
       return "login";
+    }else if (!passchecker){
+      System.out.println("Login Failed.....");
+      return "login";
     }
     System.out.println("Login Successfully....");
+    List<User> users = userService.findAllUser();
+    modelMap.addAttribute("users" , users);
     return "success";
   }
+
+
+//  @RequestMapping(path = "/success")
+//  public ModelAndView getAllUserFromDb(ModelMap modelMap){
+//    System.out.println("Print all Users.........");
+//
+//
+//    ModelAndView mv = new ModelAndView("success.jsp");
+//    mv.addObject("users", users);
+//    System.out.println(users);
+//    return mv;
+//  }
 
 }
 

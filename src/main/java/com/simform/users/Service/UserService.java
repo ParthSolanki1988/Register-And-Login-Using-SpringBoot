@@ -6,15 +6,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
 
+  @Autowired
   private UserRepository userRepository;
 
+  @Autowired
   private final PasswordEncoder passwordEncoder;
 
-  @Autowired
+
   public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
     this.passwordEncoder = passwordEncoder;
@@ -32,6 +36,10 @@ public class UserService {
 
   public User userDetails(String email){
     return userRepository.findByEmail(email);
+  }
+
+  public List<User> findAllUser(){
+    return userRepository.findAll();
   }
 
 
