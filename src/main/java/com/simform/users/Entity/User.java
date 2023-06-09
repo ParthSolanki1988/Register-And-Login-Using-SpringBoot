@@ -5,12 +5,13 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @ToString
 @Entity
 @Table(name = "users")
+
+
 public class User {
   @Id
   @SequenceGenerator(
@@ -24,6 +25,7 @@ public class User {
   )
   private Integer id;
   private String userName;
+  @Column(name = "email",nullable = false,unique = true)
   private String email;
   private String password;
 }

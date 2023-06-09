@@ -1,13 +1,15 @@
 package com.simform.users.Controller;
 
 import com.simform.users.Entity.User;
+import com.simform.users.Repository.UserRepository;
 import com.simform.users.Service.UserService;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
-import java.rmi.StubNotFoundException;
 
 @Controller
 @RequestMapping("/api/v1/users")
@@ -15,71 +17,53 @@ public class UserController {
 
   @Autowired
   private UserService userService;
+  @Autowired
+  BCryptPasswordEncoder passwordEncoder;
+
 
 
   public UserController(UserService userService) {
     this.userService = userService;
   }
-  @RequestMapping("/register")
-  public String showForm(){
+
+  @RequestMapping(value = "/register", method = RequestMethod.GET)
+  public String showRegistrationForm() {
+    System.out.println("Register Page Open....");
     return "form";
   }
 
-  @RequestMapping("/login")
-  public String showLogin(){
+  @RequestMapping(value = "/login", method = RequestMethod.GET)
+  public String showLoginForm() {
+    System.out.println("Login Page Open....");
     return "login";
   }
 
+  @RequestMapping(path = "/loginpage", method = RequestMethod.POST)
+  public String registration(@ModelAttribute User user, ModelMap modelMap , @RequestParam("email") String email) {
+    System.out.println("Processing On Register Page....");
 
-  //using model attribute we can need to write @RequestParam as parameter
 
-  //using ModelAttribute , get the data from the form and set into User user as object and print them
-//  @RequestMapping(path = "/registered" , method = RequestMethod.POST)
-//  public String processOnForm(@ModelAttribute User user , ModelMap modelMap){
-//    System.out.println("Processing form....");
-//    System.out.println(user);
-//    String message = "Form submitted successfully.";
-//    userService.insertUser(user);
-//
-//    modelMap.addAttribute("successMessage", message);
-//    System.out.println("Form Submitted Successfully!");
-//    return "form";
-//  }
 
-  @RequestMapping(path = "/registered/login" , method = RequestMethod.POST)
-  public String processOnForm(@ModelAttribute User user , ModelMap modelMap){
-    System.out.println("Processing form....");
+    userService.insertUser(user);
     System.out.println(user);
     String message = "Form submitted successfully.";
-    userService.insertUser(user);
-
-    modelMap.addAttribute("successMessage", message);
+//    modelMap.addAttribute("successMessage", message);
     System.out.println("Form Submitted Successfully!");
     return "login";
   }
 
-  @RequestMapping(path = "registered/successed" , method = RequestMethod.POST)
-  public String loginForm(@RequestParam("email") String email ,ModelMap modelMap , @ModelAttribute User user){
+  @RequestMapping(path = "/login", method = RequestMethod.POST)
+  public String login(@RequestParam("email") String email , @RequestParam("password") String password, ModelMap modelMap, @ModelAttribute User user) {
     System.out.println("Login Procsessing....");
-    if (userService.userDetails(email) != null){
-      System.out.println("User Login Successfully");
-      return "success";
-    }
-    else {
-      System.out.println("User Not Login!");
+    User user1 = userService.userDetails(email);
+
+    if (user1 == null){
+      System.out.println("Login Failed....");
       return "login";
     }
-
+    System.out.println("Login Successfully....");
+    return "success";
   }
-
-
-
-
-
-//  @PostMapping("/newUsers")
-//  public void registerUsers(@RequestBody User user){
-//
-//  }
 
 }
 
@@ -103,3 +87,4 @@ public class UserController {
     modelMap.addAttribute("password" , userPassword);
     modelMap.addAttribute("userName" , userName);
  */
+

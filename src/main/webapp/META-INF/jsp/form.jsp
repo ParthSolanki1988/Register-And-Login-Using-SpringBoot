@@ -25,16 +25,16 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/js/script.js">
 
-    <title>Hello, world!</title>
+    <title>Registration Form!</title>
   </head>
   <body>
    <%-- Display success message if present --%>
 
-    <div class="alert alert-success mb-0 alert-dismissible alert-absolute fade show " id="alertExample" role="alert" data-mdb-color="secondary">
+    <!--<div class="alert alert-success mb-0 alert-dismissible alert-absolute fade show " id="alertExample" role="alert" data-mdb-color="secondary">
       <i class="fas fa-check me-2"></i>
       ${successMessage}
       <button type="button" class="btn-close ms-2" data-mdb-dismiss="alert" aria-label="Close"></button>
-    </div>
+    </div>-->
 
     <section class="vh-100 bg-image"
       style="background-image: url('https://mdbcdn.b-cdn.net/img/Photos/new-templates/search-box/img4.webp');">
@@ -46,7 +46,7 @@
                 <div class="card-body p-5">
                   <h2 class="text-uppercase text-center mb-5">Register Your Account</h2>
 
-                  <form action="registered/login" method="post">
+                  <form action="loginpage" method="post">
                     <div class="form-outline mb-4">
                      <label class="form-label" for="form3Example1cg">User Name</label>
                       <input type="text" id="form3Example1cg" class="form-control form-control-lg" name="userName"/>

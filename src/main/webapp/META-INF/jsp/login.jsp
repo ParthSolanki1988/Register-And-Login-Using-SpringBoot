@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="/js/script.js">
 
-    <title>Login Form</title>
+    <title>Login Form!</title>
 </head>
 <body>
  <section class="vh-100 bg-image"
@@ -37,7 +37,7 @@
                 <div class="card-body p-5">
                   <h2 class="text-uppercase text-center mb-5">Login Your Account</h2>
 
-                  <form action="successed" method="post">
+                  <form action="login" method="post">
 
                     <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example3cg">Email</label>
